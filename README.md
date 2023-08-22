@@ -9,64 +9,52 @@ This program is a simple program of working of logical AND gate and NOT gate tha
 ### Executing program
        
 ```javascript
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma circom 2.0.0;
 
-contract Niks_Token {
-    string public my_token;
-    uint256 private total_Supply;
-    mapping(address => uint256) private _balances;
-    
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Burn(address indexed account, uint256 amount);
-    event Mint(address indexed account, uint256 amount);
+/This circuit template checks that c is the multiplication of a and b./  
 
-    constructor(string memory Nikhils_Token, uint256 TotalSupply) {
-        my_token = Nikhils_Token;
-        total_Supply = TotalSupply;
-        _balances[msg.sender] = total_Supply;
-        emit Transfer(address(0), msg.sender, total_Supply);
-    }
+template Multiplier2 () {  
 
-    function Total_Supply() external view returns (uint256) {
-        return total_Supply;
-    }
+   // signal inputs
+   signal input a;
+   signal input b;
 
-    function balanceOf(address account) external view returns (uint256) {
-        return _balances[account];
-    }
+   // signals from gates
+   signal x;
 
-    function transfer(address recipient, uint256 amount) external returns (bool) {
-        _transfer(msg.sender, recipient, amount);
-        return true;
-    }
+   // final signal output
+   signal output y;
 
-    function burn(uint256 amount) external returns (bool) {
-        require(amount <= _balances[msg.sender], "Balance not available to burn...");
-        _balances[msg.sender] -= amount;
-        total_Supply -= amount;
-        emit Burn(msg.sender, amount);
-        emit Transfer(msg.sender, address(0), amount);
-        return true;
-    }
+   // component gates used to create custom circuit
+   component andGate = AND();
+   component notGate = NOT();
 
-    function mint(address account, uint256 amount) external returns (bool) {
-        require(account != address(0), "Account address not correct");
-        total_Supply += amount;
-        _balances[account] += amount;
-        emit Mint(account, amount);
-        emit Transfer(address(0), account, amount);
-        return true;
-    }
+   // circuit logic
+   andGate.a <== a;
+   andGate.b <== b;
+   x <== andGate.out;
 
-    function _transfer(address sender, address recipient, uint256 amount) internal {
-        require(amount <= _balances[sender], "Balance is not available to transfer");
+   notGate.in <== x;
+   y <== notGate.out;
+ 
+}
 
-        _balances[sender] -= amount;
-        _balances[recipient] += amount;
-        emit Transfer(sender, recipient, amount);
-    }
-}                            
+template AND() {
+    signal input a;
+    signal input b;
+    signal output out;
+
+    out <== a*b;
+}
+
+template NOT() {
+    signal input in;
+    signal output out;
+
+    out <== 1 + in - 2*in;
+}
+
+component main = Multiplier2();                            
 ```
 To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.4" (or another compatible version), and then click on the "Compile M_m3p3.sol" button.
 
