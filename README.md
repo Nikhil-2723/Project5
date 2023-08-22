@@ -62,12 +62,9 @@ To compile the code, various commands have to be executed sequentially in the te
 3. npx hardhat run scripts/deploy.ts
 
 Also for install and setting up dotenv:
-1. npm install dotenv
-2. 
+1. npm install dotenv --save
 
-Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "Niks_Token" contract from the dropdown menu, and then click on the "Deploy" button. 
-
-Once the contract is deployed, you can interact with it by clicking on various functions. Click on the "Niks_Token" contract in the left-hand sidebar, and then click on the functions for transactions, getting the results accordingly as burning or adding of tokens.
+Once the code is compiled, MATIC can be transact from mumbai faucet to wallet.
 
 ## Authors
 Nikhil Upadhyay
