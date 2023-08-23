@@ -11,7 +11,7 @@ This program is a simple program of working of logical AND gate and NOT gate tha
 ```javascript
 pragma circom 2.0.0;
 
-/This circuit template checks that c is the multiplication of a and b./  
+/*This circuit template checks that c is the multiplication of a and b.*/  
 
 template Multiplier2 () {  
 
